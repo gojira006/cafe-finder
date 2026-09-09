@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #faf5ec;
+  --panel: #ffffff;
+  --line: #e6dccb;
+  --espresso: #2b1b12;
+  --brown: #6f4518;
+  --muted: #8a7a68;
+  --gold: #c99a3e;
+  --sage: #6f8a5e;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-espresso: var(--espresso);
+  --color-brown: var(--brown);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --color-sage: var(--sage);
+}
+
+body {
+  background: var(--cream);
+  color: var(--espresso);
+}
