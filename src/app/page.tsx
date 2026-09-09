@@ -101,19 +101,21 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <header className="border-b border-line bg-panel">
+      <header className="glass sticky top-0 z-30 border-b border-line/70">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2">
-            <Coffee className="text-brown" size={22} />
-            <h1 className="text-lg font-semibold text-espresso">Cafe Finder</h1>
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brown to-brown-light shadow-md shadow-brown/30">
+              <Coffee className="text-cream" size={18} />
+            </div>
+            <h1 className="text-lg font-bold tracking-tight text-espresso">Cafe Finder</h1>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowFavoritesOnly((v) => !v)}
-              className={`flex items-center gap-1.5 border px-3 py-1.5 text-sm transition-colors ${
+              className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all ${
                 showFavoritesOnly
-                  ? "border-brown bg-brown text-cream"
-                  : "border-line text-espresso hover:border-brown"
+                  ? "border-transparent bg-gradient-to-r from-brown to-brown-light text-cream shadow-md shadow-brown/20"
+                  : "border-line text-espresso hover:border-brown-light"
               }`}
             >
               <Heart size={15} className={showFavoritesOnly ? "fill-cream" : ""} />
@@ -122,7 +124,7 @@ export default function Home() {
             <button
               onClick={() => search()}
               disabled={loading || !position}
-              className="flex items-center gap-1.5 border border-line px-3 py-1.5 text-sm text-espresso transition-colors hover:border-brown disabled:opacity-50"
+              className="flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-medium text-espresso transition-all hover:border-brown-light disabled:opacity-50"
             >
               <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
               Refresh
@@ -131,15 +133,44 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
-        {geoLoading && <p className="text-sm text-muted">Getting your location…</p>}
+      <section className="mx-auto max-w-6xl px-6 pt-10">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-espresso via-brown to-brown-light px-8 py-10 shadow-xl shadow-brown/20 sm:px-12 sm:py-14">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 20% 20%, white 1px, transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+          <div className="relative">
+            <p className="text-sm font-medium uppercase tracking-widest text-cream/70">
+              Real-time · Free · No sign-up
+            </p>
+            <h2 className="mt-3 max-w-xl text-3xl font-bold leading-tight text-cream sm:text-4xl">
+              Find your next favorite cafe, nearby, right now.
+            </h2>
+            <p className="mt-3 max-w-lg text-cream/80">
+              Live data pulled from OpenStreetMap based on exactly where you are.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <main className="mx-auto max-w-6xl px-6 py-10">
+        {geoLoading && (
+          <div className="flex items-center gap-2 text-sm text-muted">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-brown" />
+            Getting your location…
+          </div>
+        )}
         {geoError && (
-          <p className="border border-line bg-panel p-4 text-sm text-brown">
+          <p className="rounded-2xl border border-line bg-panel p-4 text-sm text-brown">
             Couldn&apos;t get your location: {geoError}. Location access is required to find nearby cafes.
           </p>
         )}
         {error && (
-          <p className="mb-4 border border-line bg-panel p-4 text-sm text-brown">{error}</p>
+          <p className="mb-4 rounded-2xl border border-line bg-panel p-4 text-sm text-brown">{error}</p>
         )}
 
         {position && (
@@ -147,12 +178,17 @@ export default function Home() {
             <FilterBar filters={filters} onChange={setFilters} />
 
             <div className="flex flex-col gap-3">
-              {loading && <p className="text-sm text-muted">Finding cafes near you…</p>}
+              {loading && (
+                <div className="flex items-center gap-2 text-sm text-muted">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-brown" />
+                  Finding cafes near you…
+                </div>
+              )}
               {!loading && visibleCafes.length === 0 && (
-                <p className="text-sm text-muted">
+                <div className="rounded-2xl border border-dashed border-line p-6 text-center text-sm text-muted">
                   No cafes match your filters yet — try widening the distance, OpenStreetMap
                   coverage varies by area.
-                </p>
+                </div>
               )}
               {visibleCafes.map((cafe) => (
                 <CafeCard
@@ -166,7 +202,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="h-[70vh] overflow-hidden border border-line lg:sticky lg:top-6 lg:h-[calc(100vh-8rem)]">
+            <div className="h-[70vh] overflow-hidden rounded-2xl border border-line shadow-lg shadow-brown/10 lg:sticky lg:top-6 lg:h-[calc(100vh-8rem)]">
               <CafeMap
                 center={position}
                 cafes={visibleCafes}

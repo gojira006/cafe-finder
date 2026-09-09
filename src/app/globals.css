@@ -6,6 +6,7 @@
   --line: #e6dccb;
   --espresso: #2b1b12;
   --brown: #6f4518;
+  --brown-light: #a8703d;
   --muted: #8a7a68;
   --gold: #c99a3e;
   --sage: #6f8a5e;
@@ -17,12 +18,50 @@
   --color-line: var(--line);
   --color-espresso: var(--espresso);
   --color-brown: var(--brown);
+  --color-brown-light: var(--brown-light);
   --color-muted: var(--muted);
   --color-gold: var(--gold);
   --color-sage: var(--sage);
 }
 
 body {
-  background: var(--cream);
+  background:
+    radial-gradient(1200px 600px at 15% -10%, #fff3e0 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, #f3e6d0 0%, transparent 55%),
+    var(--cream);
   color: var(--espresso);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.pin-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--gold);
+  animation: pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.card-lift {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -12px rgba(43, 27, 18, 0.25);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin-pulse::before { animation: none; }
+  .card-lift { transition: none; }
 }
