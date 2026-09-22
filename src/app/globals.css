@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #faf5ec;
-  --panel: #ffffff;
-  --line: #e6dccb;
-  --espresso: #2b1b12;
-  --brown: #6f4518;
-  --brown-light: #a8703d;
-  --muted: #8a7a68;
-  --gold: #c99a3e;
-  --sage: #6f8a5e;
+  --cream: #fff9f2;
+  --panel: #fffcf8;
+  --line: #eadac9;
+  --espresso: #24140f;
+  --brown: #8a4219;
+  --muted: #826d61;
+  --gold: #e4a640;
+  --sage: #4f836e;
 }
 
 @theme inline {
@@ -18,50 +17,36 @@
   --color-line: var(--line);
   --color-espresso: var(--espresso);
   --color-brown: var(--brown);
-  --color-brown-light: var(--brown-light);
   --color-muted: var(--muted);
   --color-gold: var(--gold);
   --color-sage: var(--sage);
 }
 
 body {
-  background:
-    radial-gradient(1200px 600px at 15% -10%, #fff3e0 0%, transparent 60%),
-    radial-gradient(900px 500px at 110% 10%, #f3e6d0 0%, transparent 55%),
-    var(--cream);
+  background: var(--cream);
   color: var(--espresso);
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.9); opacity: 0.6; }
-  70% { transform: scale(1.9); opacity: 0; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
+::selection { background: #f6cf91; color: var(--espresso); }
 
-.pin-pulse::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: var(--gold);
-  animation: pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+.app-shell {
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(circle at 10% 5%, rgb(246 207 145 / 0.58), transparent 24rem), radial-gradient(circle at 93% 16%, rgb(227 151 89 / 0.32), transparent 27rem), linear-gradient(135deg, #fffaf4 0%, #f9eee3 48%, #fff7ec 100%);
 }
-
-.card-lift {
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-.card-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px -12px rgba(43, 27, 18, 0.25);
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pin-pulse::before { animation: none; }
-  .card-lift { transition: none; }
-}
+.app-shell::before, .app-shell::after { position: fixed; z-index: -1; width: 28rem; height: 28rem; border-radius: 999px; content: ""; filter: blur(1px); pointer-events: none; }
+.app-shell::before { right: -12rem; bottom: -11rem; background: rgb(221 136 70 / 0.24); animation: drift 15s ease-in-out infinite alternate; }
+.app-shell::after { top: 38%; left: -18rem; background: rgb(246 207 145 / 0.32); animation: drift 19s ease-in-out infinite alternate-reverse; }
+.glass-panel { border: 1px solid rgb(255 255 255 / 0.7); background: rgb(255 252 248 / 0.72); box-shadow: 0 18px 45px rgb(77 37 17 / 0.09); backdrop-filter: blur(16px); }
+.hero-orb { position: absolute; right: 3%; top: -3.5rem; width: 14rem; height: 14rem; border: 1px solid rgb(255 255 255 / 0.75); border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffe6a9, #d8773a 58%, #854018); box-shadow: inset 0 0 35px rgb(255 255 255 / 0.4), 0 22px 45px rgb(119 57 22 / 0.18); opacity: 0.9; }
+.hero-orb::before { position: absolute; inset: 1.4rem; border: 1px solid rgb(255 248 231 / 0.55); border-radius: inherit; content: ""; }
+.fade-up { animation: fade-up 0.55s both; }
+.cafe-card { animation: fade-up 0.45s both; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
+.cafe-card:hover, .cafe-card:focus-within { transform: translateY(-3px); box-shadow: 0 16px 30px rgb(70 32 14 / 0.11); }
+.map-frame .leaflet-container { filter: saturate(0.9) sepia(0.08) contrast(1.03); }
+.map-frame .leaflet-control-zoom a { border-color: var(--line); color: var(--espresso); }
+.pin-pulse::before { position: absolute; inset: 0; border-radius: 999px; background: var(--gold); content: ""; animation: pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes drift { to { transform: translate3d(-1.5rem, -1rem, 0) scale(1.08); } }
+@keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.6; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }

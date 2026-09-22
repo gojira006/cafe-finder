@@ -1,10 +1,8 @@
 import type { Cafe, LatLng } from "./types";
 import { distanceMeters } from "./distance";
 
-const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
-
 type OverpassElement = {
-  type: "node" | "way";
+  type: "node" | "way" | "relation";
   id: number;
   lat?: number;
   lon?: number;
@@ -21,31 +19,34 @@ function buildAddress(tags: Record<string, string> = {}): string {
 }
 
 /**
- * Queries OpenStreetMap's free Overpass API for cafes within radiusMeters
- * of center. No API key, no billing account, no cost.
+ * Queries the app's server-side Overpass proxy for cafes within radiusMeters.
+ * Keeping the external request on the server avoids browser CORS failures and
+ * lets the proxy retry a healthy public Overpass instance.
  */
 export async function fetchNearbyCafes(
   center: LatLng,
   radiusMeters: number
 ): Promise<Cafe[]> {
-  const query = `
-    [out:json][timeout:25];
-    (
-      node["amenity"="cafe"](around:${radiusMeters},${center.lat},${center.lng});
-      way["amenity"="cafe"](around:${radiusMeters},${center.lat},${center.lng});
-    );
-    out center tags;
-  `;
-
-  const res = await fetch(OVERPASS_URL, {
+  const res = await fetch("/api/cafes", {
     method: "POST",
-    headers: { "Content-Type": "text/plain" },
-    body: query,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      lat: center.lat,
+      lng: center.lng,
+      radiusMeters,
+    }),
   });
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`Overpass API error (${res.status}): ${body}`);
+    let message = "Unable to fetch cafes right now.";
+    try {
+      const data: { error?: string } = JSON.parse(body);
+      if (data.error) message = data.error;
+    } catch {
+      // Use the safe fallback message if the response is not JSON.
+    }
+    throw new Error(message);
   }
 
   const data: { elements?: OverpassElement[] } = await res.json();
