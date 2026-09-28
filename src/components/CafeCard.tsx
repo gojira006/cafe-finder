@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, MapPin, Clock, Wifi, Trees } from "lucide-react";
+import { Heart, MapPin, Clock, Wifi, Trees, Navigation } from "lucide-react";
 import type { Cafe } from "@/lib/types";
 import { formatDistance } from "@/lib/distance";
 
@@ -26,7 +26,7 @@ export default function CafeCard({
       }`}
     >
       <div className="flex items-start justify-between gap-2">
-        <h3 className="truncate font-semibold tracking-tight text-espresso">{cafe.name}</h3>
+        <h3 className="font-display truncate text-lg font-bold leading-tight tracking-tight text-espresso">{cafe.name}</h3>
         <button
           onClick={onToggleFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
@@ -60,6 +60,10 @@ export default function CafeCard({
             <Trees size={13} /> Outdoor
           </span>
         )}
+      </div>
+      <div className="mt-4 flex items-center justify-between border-t border-line/60 pt-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.13em] text-muted">OpenStreetMap listing</span>
+        <a href={`https://www.google.com/maps/dir/?api=1&destination=${cafe.lat},${cafe.lng}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs font-bold text-brown transition hover:gap-1.5 hover:text-espresso focus:outline-none focus:ring-2 focus:ring-brown/40">Directions <Navigation size={13} /></a>
       </div>
     </div>
   );

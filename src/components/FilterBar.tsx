@@ -10,10 +10,10 @@ export default function FilterBar({
   onChange: (f: Filters) => void;
 }) {
   return (
-    <aside className="glass-panel h-fit rounded-3xl p-5 lg:sticky lg:top-6">
-      <div className="mb-6">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-brown">Fine tune</p>
-        <h2 className="mt-1 text-xl font-semibold tracking-tight text-espresso">Your coffee crawl</h2>
+    <aside className="glass-panel h-fit rounded-[1.75rem] p-5 lg:sticky lg:top-5">
+      <div className="mb-6 border-b border-line/60 pb-5">
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brown">Tailor the search</p>
+        <h2 className="font-display mt-1 text-2xl font-bold tracking-tight text-espresso">Your coffee crawl</h2>
       </div>
       <div className="flex flex-col gap-5">
       <div>
@@ -28,8 +28,9 @@ export default function FilterBar({
           step={0.5}
           value={filters.maxDistanceKm}
           onChange={(e) => onChange({ ...filters, maxDistanceKm: Number(e.target.value) })}
-          className="mt-3 w-full accent-brown"
+          className="range-input mt-3 w-full accent-brown"
         />
+        <div className="mt-2 flex justify-between text-[10px] font-bold uppercase tracking-[0.1em] text-muted"><span>Nearby</span><span>Explore farther</span></div>
       </div>
 
       <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-line/70 bg-white/50 px-3 py-2.5 text-sm font-medium text-espresso transition hover:border-brown/50">
@@ -71,7 +72,7 @@ export default function FilterBar({
         </div>
       </div>
 
-      <p className="rounded-xl bg-gold/10 p-3 text-xs leading-relaxed text-muted">
+      <p className="rounded-2xl border border-gold/15 bg-gold/10 p-3 text-xs leading-relaxed text-muted">
         Wifi and outdoor seating filters only catch cafes where someone has
         tagged that info on OpenStreetMap — unchecked doesn&apos;t always mean
         &quot;no,&quot; sometimes it just means &quot;not tagged yet.&quot;

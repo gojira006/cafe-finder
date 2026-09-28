@@ -25,7 +25,9 @@
 body {
   background: var(--cream);
   color: var(--espresso);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
 }
+.font-display { font-family: Georgia, "Times New Roman", serif; }
 
 ::selection { background: #f6cf91; color: var(--espresso); }
 
@@ -34,15 +36,25 @@ body {
   overflow: hidden;
   background: radial-gradient(circle at 10% 5%, rgb(246 207 145 / 0.58), transparent 24rem), radial-gradient(circle at 93% 16%, rgb(227 151 89 / 0.32), transparent 27rem), linear-gradient(135deg, #fffaf4 0%, #f9eee3 48%, #fff7ec 100%);
 }
+.site-header { position: relative; z-index: 20; }
+.brand-mark { border-radius: 42% 58% 52% 48% / 50% 42% 58% 50%; background: linear-gradient(135deg, var(--gold), #b35b25 48%, var(--brown)); }
 .app-shell::before, .app-shell::after { position: fixed; z-index: -1; width: 28rem; height: 28rem; border-radius: 999px; content: ""; filter: blur(1px); pointer-events: none; }
 .app-shell::before { right: -12rem; bottom: -11rem; background: rgb(221 136 70 / 0.24); animation: drift 15s ease-in-out infinite alternate; }
 .app-shell::after { top: 38%; left: -18rem; background: rgb(246 207 145 / 0.32); animation: drift 19s ease-in-out infinite alternate-reverse; }
 .glass-panel { border: 1px solid rgb(255 255 255 / 0.7); background: rgb(255 252 248 / 0.72); box-shadow: 0 18px 45px rgb(77 37 17 / 0.09); backdrop-filter: blur(16px); }
-.hero-orb { position: absolute; right: 3%; top: -3.5rem; width: 14rem; height: 14rem; border: 1px solid rgb(255 255 255 / 0.75); border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ffe6a9, #d8773a 58%, #854018); box-shadow: inset 0 0 35px rgb(255 255 255 / 0.4), 0 22px 45px rgb(119 57 22 / 0.18); opacity: 0.9; }
-.hero-orb::before { position: absolute; inset: 1.4rem; border: 1px solid rgb(255 248 231 / 0.55); border-radius: inherit; content: ""; }
+.hero-panel { min-height: 292px; }
+.coffee-compass { position: absolute; right: clamp(-3.7rem, 5vw, 4rem); top: 50%; width: clamp(15rem, 27vw, 23rem); aspect-ratio: 1; transform: translateY(-50%) rotate(-12deg); border: 1px solid rgb(138 66 25 / .18); border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 1.75rem, rgb(138 66 25 / .08) 1.8rem 1.85rem), radial-gradient(circle at 36% 32%, #ffe7ac 0 5%, #e4a640 22%, #b65c29 51%, #713116 73%, #32150d 100%); box-shadow: inset 0 0 0 1.2rem rgb(255 244 225 / .24), inset 0 0 55px rgb(38 16 7 / .42), 0 24px 45px rgb(85 38 17 / .18); }
+.coffee-compass::before { position: absolute; inset: 11%; border: 1px dashed rgb(255 244 225 / .55); border-radius: 50%; content: ""; }
+.coffee-compass span, .coffee-compass i, .coffee-compass b { position: absolute; display: block; background: rgb(255 245 225 / .65); content: ""; }
+.coffee-compass span { left: 50%; top: 7%; width: 1px; height: 86%; transform: rotate(48deg); }
+.coffee-compass i { left: 7%; top: 50%; width: 86%; height: 1px; transform: rotate(-26deg); }
+.coffee-compass b { left: 46%; top: 46%; width: 8%; aspect-ratio: 1; border-radius: 50%; box-shadow: 0 0 0 8px rgb(255 245 225 / .15); }
 .fade-up { animation: fade-up 0.55s both; }
 .cafe-card { animation: fade-up 0.45s both; transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
 .cafe-card:hover, .cafe-card:focus-within { transform: translateY(-3px); box-shadow: 0 16px 30px rgb(70 32 14 / 0.11); }
+.results-column .cafe-card:nth-child(3) { animation-delay: 60ms; }
+.results-column .cafe-card:nth-child(4) { animation-delay: 120ms; }
+.range-input { height: 1.25rem; cursor: pointer; }
 .map-frame .leaflet-container { filter: saturate(0.9) sepia(0.08) contrast(1.03); }
 .map-frame .leaflet-control-zoom a { border-color: var(--line); color: var(--espresso); }
 .pin-pulse::before { position: absolute; inset: 0; border-radius: 999px; background: var(--gold); content: ""; animation: pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite; }
@@ -50,3 +62,4 @@ body {
 @keyframes drift { to { transform: translate3d(-1.5rem, -1rem, 0) scale(1.08); } }
 @keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.6; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; } }
+@media (max-width: 640px) { .hero-panel { min-height: 278px; } .coffee-compass { right: -7.5rem; top: 59%; opacity: .65; } }
